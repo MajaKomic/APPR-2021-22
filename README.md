@@ -10,38 +10,38 @@ V nadaljevanju bom analizirala še stopnjo izobraženosti po starostnih skupinah
 
 ### Tabele
 1.TABELA: Srednješolso izobraževanje v Sloveniji
-*vrsta izobraževanja,
-*letnik,
-*spol,
-*leto,
-*število vpisanih v letnik
-*število dijakov, ki je vzpešno zaključilo srednjo šolo.
+* vrsta izobraževanja,
+* letnik,
+* spol,
+* leto,
+* število vpisanih v letnik
+* število dijakov, ki je vzpešno zaključilo srednjo šolo.
 
 2.TABELA: Terciarno izobraževanje v Sloveniji
-*področje izobraževanja,
-*vrsta izobraževanja,
-*način študija,
-*število vpisanih študentov,
-*število diplomantov.
+* področje izobraževanja,
+* vrsta izobraževanja,
+* način študija,
+* število vpisanih študentov,
+* število diplomantov.
 
 3.TABELA: Javni izdatki namenjeni v izobraževanje v Sloveniji
-*raven izobraževanja,
-*izdatki po namenu,
-*leto,
-*količina izdatkov,
-*vrsta porabe,
-*poraba.
+* raven izobraževanja,
+* izdatki po namenu,
+* leto,
+* količina izdatkov,
+* vrsta porabe,
+* poraba.
 
 4.TABELA: Sestava prebivalstva glede na stopnjo izobrazbe v Evropskih državah
-*država,
-*stopnja izobrazbe,
-*starostna skupina,
-*procent prebivalstva.
+* država,
+* stopnja izobrazbe,
+* starostna skupina,
+* procent prebivalstva.
 
 ### Viri
 Podatke sem dobila na naslednjihspletnih straneh:
-*https://pxweb.stat.si/SiStat/sl 
-*https://ec.europa.eu/eurostat
+* https://pxweb.stat.si/SiStat/sl
+* https://ec.europa.eu/eurostat
 
 
 ## Program
