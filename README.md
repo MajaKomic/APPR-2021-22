@@ -8,33 +8,33 @@ V tem projektu bom analizirala izobraževanje v Sloveniji. Zanimal me bo vpis v 
 
 ### Tabele
 1.TABELA: Srednješolso izobraževanje v Sloveniji
-* vrsta izobraževanja (<chr>),
-* letnik (<chr>),
-* spol (<fctr>),
-* leto (<dbl>),
-* število vpisanih v letnik (<dbl>),
-* število dijakov, ki je vzpešno zaključilo srednjo šolo (<dbl>).
+* vrsta izobraževanja (chr),
+* letnik (chr),
+* spol (fctr),
+* leto (dbl),
+* število vpisanih v letnik (dbl),
+* število dijakov, ki je vzpešno zaključilo srednjo šolo (dbl).
 
 2.TABELA: Terciarno izobraževanje v Sloveniji
-* področje izobraževanja (<chr>),
-* vrsta izobraževanja (<chr>),
-* način študija (<chr>),
-* število vpisanih študentov (<dbl>),
-* število diplomantov (<dbl>).
+* področje izobraževanja (chr),
+* vrsta izobraževanja (chr),
+* način študija (chr),
+* število vpisanih študentov (dbl),
+* število diplomantov (dbl).
 
 3.TABELA: Javni izdatki namenjeni v izobraževanje v Sloveniji
-* raven izobraževanja (<chr>),
-* izdatki po namenu (<chr>),
-* leto (<dbl>),
-* količina izdatkov (<dbl>),
-* vrsta porabe (<chr>),
-* poraba (<dbl>).
+* raven izobraževanja (chr),
+* izdatki po namenu (chr),
+* leto (dbl),
+* količina izdatkov (dbl),
+* vrsta porabe (chr),
+* poraba (dbl).
 
 4.TABELA: Sestava prebivalstva glede na stopnjo izobrazbe v Evropskih državah
-* država (<chr>),
-* stopnja izobrazbe (<chr>),
-* starostna skupina (<fctr>),
-* procent prebivalstva (<dbl>).
+* država (chr),
+* stopnja izobrazbe (chr),
+* starostna skupina (fctr),
+* procent prebivalstva (dbl).
 
 ### Viri
 Podatke sem dobila na naslednjihspletnih straneh:
