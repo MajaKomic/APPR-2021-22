@@ -1,7 +1,5 @@
 # 3. faza: Vizualizacija podatkov
-library(ggplot2)
-library(dplyr)
-
+source("lib/libraries.r")
 #_______________________________________________________________________________
 #1.GRAF: DINAMIKA VPISA 
 tabela.graf1.1 <- tabela1 %>%
@@ -99,11 +97,6 @@ graf2 <-  ggplot(tabela.graf2) +
 #___________________________________________________________________________________________
 #ZEMLJEVID: ŠTEVILO MATURANTOV NA 1000 PREBIVALCEV PO REGIJAH
 #zemljevid Slovenije po regijah
-library(sp)
-library(rgdal)
-library(raster)
-library(rgeos)
-library(tidyverse)
 
 source("lib/uvozi.zemljevid.r")
 zemljevid <- uvozi.zemljevid("http://kt.ijs.si/~ljupco/lectures/appr/zemljevidi/si/gadm36_SVN_shp.zip",
@@ -161,7 +154,6 @@ tabela.zemljevid1$regija <- str_replace_all(
 )
 
 #narišem zemljevid
-library(tmap)
 tmap_mode("plot")
 zemljevid1 <- merge(
     x = tabela.zemljevid1, 
@@ -189,7 +181,8 @@ zem1 <- tm_shape(zemljevid1) +
     legend.text.size = 0.8,
     legend.position = c("right","bottom"),
     legend.bg.color = "white",
-    legend.bg.alpha = 1) 
+    legend.bg.alpha = 1) +
+  tm_text("NAME_1", size = 2/3)
 
 
 #_______________________________________________________________________________________
@@ -262,7 +255,8 @@ graf5 <- ggplot(tabela.graf5) +
     aes(x = solsko.leto, 
         y = spol.regija, 
         size = promil, 
-        colour = promil)
+        colour = promil,
+        text = promil)
   ) + 
   scale_size(breaks = seq(10, 22, by=1)) +
   coord_fixed() +
@@ -271,19 +265,19 @@ graf5 <- ggplot(tabela.graf5) +
   theme(
     axis.text.x = element_text(angle = 45, vjust = 0.5),
     axis.title.x = element_text(vjust =  0),
-    plot.title = element_text(hjust = 0.5)
+    plot.title = element_text(hjust = 0.5),
+    legend.position="bottom"
   ) +
   labs(
     x = "Šolsko leto",
     y = "Spol in del Slovenije",
-    title = "VPIS NA FAKULTETE PO KONČANI SREDNJI ŠOLI NA 1000 PREBIVALCEV"
+    title = "VPIS NA FAKULTETE PO KONČANI\nSREDNJI ŠOLI NA 1000 PREBIVALCEV"
   ) +
   scale_colour_gradientn(colours=terrain.colors(10)) +
   guides(
     size = guide_legend(title="Število vpisanih\nna 1000 prebivalcev"),
     colour = guide_legend(title="Število vpisanih\nna 1000 prebivalcev")
   ) 
-
 
 #________________________________________________________________________________________
 #6.GRAF: PRIMERJAVA POVPREČNEGA ŠTEVILA DIPLOMANTOV GLEDE NA VRSTO IZOBRAZEVANJA IN SPOL
@@ -330,38 +324,9 @@ graf6 <- ggplot(tabela.graf6) +
     labs(
       x = "Vrsta izobraževanja",
       y = "Povprečno letno število diplomantov",
-      title = "PRIMERJAVA POVPREČNEGA ŠTEVILA DIPLOMANTOV\nGLEDE NA VRSTO IZOBRAZEVANJA IN SPOL"
+      title = "POVPREČNO ŠTEVILO DIPLOMANTOV\nGLEDE NA VRSTO IZOBRAZEVANJA IN SPOL"
     ) +
     guides(fill=guide_legend(title="Spol:")) 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
