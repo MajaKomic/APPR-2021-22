@@ -1,6 +1,6 @@
 ---
 title: "Poročilo pri predmetu Analiza podatkov s programom R"
-author: "Študent FMF"
+author: "Maja Komic"
 output:
   html_document: default
   pdf_document:
@@ -20,13 +20,54 @@ source("lib/libraries.r", encoding="UTF-8")
 
 ## Izbira teme
 
-***
+V tem projektu bom analizirala izobraževanje v Sloveniji. 
+Zanimal me bo vpis v srednje šole in fakultete v primerjavi 
+s številom maturantov in diplomantov. 
+\n
+Podatke sem pridobila iz podatkovne baze [SURS](https://pxweb.stat.si/SiStat/sl) v obliki CSV datotek.
 
 ## Obdelava, uvoz in čiščenje podatkov
 
 ```{r uvoz}
 source("uvoz/uvoz.r", encoding="UTF-8")
 ```
+
+1. **tabela1** - VPIS V SEKUNDARNO IZOBRAŽEVANJE 
+* `vrsta.izobrazevanja` - vrsta izobraževalnega programa
+* `letnik` - letnik vpisa
+* `starost` - starost ob vpisu
+* `spol` - spol (moški in ženski spol)
+* `solsko.leto` - šolsko leto vpisa
+* `stevilo.vpisanih` - število vpisanih 
+* `stevilo.prebivalcev` - število prebivalcev po starosti in spolu
+* `delez` - delež dijakov na 1000 prebivalcev
+
+2. **tabela2** - MATURANTJE
+* `vrsta.izobrazevanja` - vrsta izobraževanja
+* `regija` - regija stalnega prebivališča maturanta
+* `solsko.leto` - šolsko leto
+* `stevilo.maturantov` - število maturantov
+* `stevilo.prebivalcev` - število prebivalcev po regijah
+* `delez` - delež maturantov na 1000 prebivalcev
+
+3. **tabela3** - VPIS V TERCIARNO IZOBRAŽEVANJE
+* `vrsta.izobrazevanja` - vrsta izobraževanja
+* `nacin.studija` - način študija (redni in izredni študij)
+* `spol` - spol (moški in ženski spol)
+* `kohezijska.regija` - regija stalnega prebivališča (Vzgodna in Zahodna Slovenija)
+* `solsko.leto` - šolsko leto
+* `stevilo.vpisanih` - število vpisanih 
+* `stevilo.prebivalcev` - število prebivalcev glede na V in Z Slovenijo
+* `delez` - število vpisanih na 1000 prebivalcev
+
+4. **tabela4** - DIPLOMANTJE
+* `nacin.studija` - način študija (redni in izredni študij)
+* `vrsta.izobrzevanja` - vrsta izobraževanja
+* `spol` - spol (moški in ženski spol)
+* `solsko.leto` - šolsko leto
+* `stevilo.diplomantov` - število diplomantov
+* `stevilo.prebivalcev` - število prebivalcev
+* `delez` - število diplomantov na 1000 prebivalcev
 
 ***
 
@@ -36,12 +77,112 @@ source("uvoz/uvoz.r", encoding="UTF-8")
 source("vizualizacija/vizualizacija.r", encoding="UTF-8")
 ```
 
+```{r, fig.align='center'}
+print(graf1)
+```
+Na zgornjem grafu vidimo dinamiko vpisa glede na stopnjo izobrazbe, ki jo pridobiva posameznik, v časovnem obdobju 10ih let. Opazimo lahko, da je vpis predcej konstanten, razen morda pri VI. stopnji izobrazbe, kjer je vpis močno padel, sedaj pa ponovno raste. Za lažje razumevanje si v spodnji tabeli lahko ogledate katere stopnjo izobrazbe pridobimo po končani vrsti izobrazevanja.
+
+Po dosedanjih programih                                Stopnja izobrazbe    Po bolonjskih programih
+------------------------------------------------------ -------------------- -------------------------
+nedokončana OŠ                                         I.                   
+OŠ                                                     II.                    
+nižje poklicno izobraževanje (2 letno)                 III.                          
+srednje poklicno izobraževanje (3 letno)               IV.                           
+gimnazijsko                                            V.                       
+srednje poklicno -tehniško izobraževanje               V.                             
+srednje tehniško oz. drugo strokovno izobraževanje     V.                                    
+višješolski program (do 1994)                          VI.                           
+višješolski strokovni program                          VI.                                
+specializacija po višješolskem programu                VI.                  visokošolski strokovni                
+visokošolski strokovni programi                        VI.                  univerzitetni program (1. bol. st)            
+specializacija po visokošolskem strokovnem programu    VII.                 magisterij stroke (2. bol. st.)
+univerzitetni program                                  VII.                 
+specializacija po univerzitetnem programu              VIII.                
+magisterij znanosti                                    VIII.                
+doktorat znanosti                                      VIII.                doktorat znanosti (3. bol. st.)
+
+
+```{r, fig.align='center'}
+print(graf2)
+```
+
+V srednje spolšnih, srednje tehniških in drugih strokovnih šolah po letnikih prevladuje ena starostna skupina, medtem ko v nižje in srednje poklicnih šolah so skupine bolj starostno raznolike.
+
+```{r, fig.align='center'}
+print(zem1)
+```
+
+Povprečno ima Jugovzhodna Slovenija največ maturantov na 1000 prebivalcev, najmanj pa Zasavska regija.
+
+```{r, fig.align='center'}
+print(graf4)
+```
+
+V redni študij se povprečno vpiše kar 77% vseh študentov, zanimivo pa je, da je procent večji pri izrednih študentih VIII. stopnje v primerjavi z rednimi študenti VIII. stopnje.
+
+```{r, fig.align='center'}
+print(graf5)
+```
+
+
+```{r, fig.align='center'}
+print(graf6)
+```
+
 ***
 
 ## Napredna analiza podatkov
 
-```{r analiza}
+```{r analiza, results='hide', echo=FALSE}
 source("analiza/analiza.r", encoding="UTF-8")
+```
+
+```{r echo=FALSE}
+
+column(4,
+    radioButtons(
+      "nacin",
+      label = "Način razvrščanja v skupine",
+      choices = c(
+        "Hierarhično razvrščanje",
+        "Metoda k-tih voditeljev"
+      ),
+      selected = "Hierarhično razvrščanje"
+    )
+)
+
+column(8,
+  renderPlot({
+      narisi(input$nacin)
+  })
+)
+
+```
+
+Z modro so na grafu označene točke, ki predstavljajo optimalno število skupin. Spodaj si z izbiro števila skupin lahko na zemljevidu ogledamo, katere regije spadajo v isto skupino.
+
+```{r echo=FALSE}
+
+column(2,
+  selectInput(
+    "k",
+    label = "Število skupin:",
+    choices = c(2, 3),
+    selected = 2
+  )
+)
+
+column(10,
+  renderPlot({
+      zemljevid(input$k)
+  })
+)
+```
+
+Na grafu Linearna regresija je prikazan napovedni model števila diplomantov v odvisnosti od števila vpisanih.
+
+```{r, fig.align='center'}
+print(gg)
 ```
 
 ***

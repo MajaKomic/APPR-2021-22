@@ -229,6 +229,7 @@ graf4 <- ggplot(tabela.graf4) +
   theme_void() 
 
 
+
 #_____________________________________________________________________________________
 #5.GRAF: Vpis na fakultete po končani srednji šoli na 1000 prebivalcev
 tabela.graf5 <- tabela3 %>%
@@ -321,12 +322,11 @@ graf6 <- ggplot(tabela.graf6) +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme_classic() +
   scale_fill_manual(values=c("#99CCFF", "#FF66CC")) +
-    labs(
+  labs(
       x = "Vrsta izobraževanja",
       y = "Povprečno letno število diplomantov",
       title = "POVPREČNO ŠTEVILO DIPLOMANTOV\nGLEDE NA VRSTO IZOBRAZEVANJA IN SPOL"
     ) +
     guides(fill=guide_legend(title="Spol:")) 
-
 
 

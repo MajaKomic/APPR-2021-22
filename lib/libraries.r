@@ -12,6 +12,7 @@ library(stringi)
 library(ggplot2)
 library(dplyr)
 library(plotly)
+library(ggrepel)
 
 library(sp)
 library(rgdal)

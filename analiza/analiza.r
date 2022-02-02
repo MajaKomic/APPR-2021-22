@@ -323,6 +323,67 @@ zem3 <- zemljevid(3)
 
 #_______________________________________________________________________________
 #NAPOVEDNI MODELI
+#Linearna regresija
+preurejena.4 <- tabela4 %>%
+  dplyr::select(2, 4, 5) %>%
+  group_by(vrsta.izobrazevanja, solsko.leto) %>%
+  summarise(stevilo.diplomantov = sum(stevilo.diplomantov))
+
+tabela.podatki <- tabela3 %>%
+  dplyr::select(1, 5, 6) %>%
+  group_by(vrsta.izobrazevanja, solsko.leto) %>%
+  summarise(stevilo.vpisanih = sum(stevilo.vpisanih)) %>%
+  left_join(preurejena.4, by = c("vrsta.izobrazevanja" = "vrsta.izobrazevanja", 
+                            "solsko.leto" = "solsko.leto")
+            ) %>%
+  filter(solsko.leto != "2020/21", solsko.leto != "2009/10", solsko.leto != "2010/11") 
+
+gg <- ggplot(tabela.podatki, aes(x=stevilo.vpisanih, y=stevilo.diplomantov)) + geom_point()
+
+stevilo.diplomantov ~ stevilo.vpisanih
+stevilo.diplomantov ~ stevilo.vpisanih + I(stevilo.vpisanih^2)
+
+podatki <- tabela.podatki
+n <- nrow(podatki)
+r <- sample(1:n)
+formula <- stevilo.diplomantov ~ stevilo.vpisanih
+
+k <- 5
+set.seed(123)
+razrez <- cut(1:n, k, labels = FALSE)
+razbitje <- split(r, razrez)
+
+pp.napovedi <- rep(0, n)
+for (i in 1:length(razbitje)){
+  train.data <- podatki [-razbitje[[i]], ]           #učni podatki
+  test.data <- podatki[razbitje[[i]], ]              #testni podatki
+  model <- lm(data = train.data, formula = formula)  #naučimo model
+  napovedi <- predict(model, newdata = test.data)    #napovemo za testne podatke
+  pp.napovedi[razbitje[[i]]] <- napovedi
+}
+
+pp.napovedi
+
+#izračunamo kvadratno napako -MSE
+MSE <- mean((pp.napovedi - podatki$stevilo.diplomantov)^2)
+
+gg <- gg + 
+  geom_smooth(method = "lm", 
+              formula = y ~ x, 
+              se = TRUE, 
+              fullrange = TRUE, 
+              color = "green") +
+  theme_classic() +
+  theme(
+    plot.title = element_text(hjust = 0.5) #naslov na sredini
+  ) +
+  labs(
+    x = "Število vpisanih",
+    y = "Število diplomantov",
+    title = "LINEARNA REGRESIJA"
+  )
+
+
 
 
 
